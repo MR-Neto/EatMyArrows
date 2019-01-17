@@ -44,6 +44,28 @@ window.addEventListener('load', showSplashScreen);
 
 function startGame() {
     buildGameScreen();
-    
 
+    var canvas = document.getElementById('canvas');
+    game = new Game(canvas);
+    var onKeyDown = function (event) {
+        switch (event.keyCode) {
+            case 38: //arrow up
+                game.keyUp();
+                break;
+
+            case 40: //arrow down
+                game.keyDown();
+                break;
+
+            case 32: //space bar pressed
+                game.keyEnter()
+                break;
+            default:
+                break;
+        }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+
+    game.start();
 }
