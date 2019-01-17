@@ -4,8 +4,6 @@
 <p>This is final project of the first module of Ironhack's web dev bootcamp. In this game the main objective is avoiding that the enemies enter and destroy your castle. The user can shoot arrows to kill enemies with a archer on top of a watchtower. Other screens consist of a splash screen to intro the game and a end screen (gameover/win) to complete the game.</p>
 
 <h2>MVP (DOM - CANVAS)</h2>
-Canvas
-
 The MVP will feature:
 <ul>
   <li>A splashscreen to start the game;</li>
