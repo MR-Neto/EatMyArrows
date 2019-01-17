@@ -6,7 +6,6 @@
 <h2>MVP (DOM - CANVAS)</h2>
 Canvas
 
-<h2> definition, deliverables.</h2>
 The MVP will feature:
 <ul>
   <li>A splashscreen to start the game;</li>
