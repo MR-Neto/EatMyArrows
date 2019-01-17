@@ -1,19 +1,21 @@
 # KillThemAll
 
-Description
-This is final project of the first module of Ironhack's web dev bootcamp. In this game the main objective is avoiding that the enemies enter and destroy your castle. The user can shoot arrows to kill enemies with a archer on top of a watchtower. Other screens consist of a splash screen to intro the game and a end screen (gameover/win) to complete the game.    
+<h2>Description</h2>
+This is final project of the first module of Ironhack's web dev bootcamp. In this game the main objective is avoiding that the enemies enter and destroy your castle. The user can shoot arrows to kill enemies with a archer on top of a watchtower. Other screens consist of a splash screen to intro the game and a end screen (gameover/win) to complete the game.<br>    
 
-MVP (DOM - CANVAS)
+<h2>MVP (DOM - CANVAS)</h2>
 Canvas
 
-MVP definition, deliverables.
+<h2> definition, deliverables.</h2>
 The MVP will feature:
--A splashscreen to start the game;
--A game screen, based on HTML Canvas;
--Game dynamics, including movements, tracking the health of the castle, pointing and shooting arrows;
--A screen to display the result of the game (victory/defeat).
+<ul>
+  <li>A splashscreen to start the game;</li>
+  <li>A game screen, based on HTML Canvas;</li>
+  <li>Game dynamics, including movements, tracking the health of the castle, pointing and shooting arrows;</li>
+  <li>A screen to display the result of the game (victory/defeat).</li>
+</ul>
 
-Backlog
+<h2>Backlog</h2>
 -Increase the number of enemies.
 -Intructions in splashscreen.
 -Create levels.
@@ -23,7 +25,7 @@ Backlog
 -Implement enemy castle.
 -Play medieval music.
 
-Data structure
+<h2>Data structure</h2>
 The MVP will include the following classes(with respective methods).
 -Game Class:
   clearCanvas()
@@ -58,7 +60,7 @@ The MVP will include the following classes(with respective methods).
   draw()
   checkColide(enemy)
 
-States y States Transitions
+<h2>States y States Transitions</h2>
 There will be 3 states:
 -Splash screen, 
 -Game screen,
