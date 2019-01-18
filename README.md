@@ -15,7 +15,7 @@ The MVP will feature:
 <h2>Backlog</h2>
 
 <ul>
-  <li>Increase the number of enemies./li>
+  <li>Increase the number of enemies.</li>
   <li>Intructions in splashscreen.</li>
   <li>Create levels.</li>
   <li>Increase the number of archers.</li>
