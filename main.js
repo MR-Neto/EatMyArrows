@@ -1,3 +1,5 @@
+'use strict';
+
 function buildDom(html) {
     var target = document.querySelector(".container");
     target.innerHTML = html;
@@ -12,7 +14,7 @@ function destroyDom(target) {
 function showSplashScreen() {
     var target = document.querySelector(".container");
     destroyDom(target);
-    splashScreen = buildDom(`
+    var splashScreen = buildDom(`
         <h1>Kill Them All</h1>
         <a href="#" class="button">Fight!</a>
     `);
@@ -23,7 +25,7 @@ function showSplashScreen() {
 function buildGameScreen() {
     var target = document.querySelector(".container");
     destroyDom(target);
-    gameScreen = buildDom(`
+    var gameScreen = buildDom(`
         <canvas id="canvas"></canvas>
     `);
 }
@@ -31,21 +33,23 @@ function buildGameScreen() {
 function showEndScreen() {
     var target = document.querySelector(".container");
     destroyDom(target);
-    splashScreen = buildDom(`
+    var endScreen = buildDom(`
         <h1>Victory</h1>
         <a href="#" class="button">Restart Battle</a>
     `);
 
-    splashScreen.querySelector(".button").addEventListener("click", startGame);
+    endScreen.querySelector(".button").addEventListener("click", startGame);
 }
 
 window.addEventListener('load', showSplashScreen);
 
+var game;
 
 function startGame() {
     buildGameScreen();
 
     var canvas = document.getElementById('canvas');
+    
     game = new Game(canvas);
     var onKeyDown = function (event) {
         switch (event.keyCode) {
