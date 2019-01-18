@@ -52,7 +52,8 @@ Game.prototype.start = function () {
         this.animation = window.requestAnimationFrame(loop.bind(this));
     }
 
-    this.animation = window.requestAnimationFrame(loop.bind(this));
+    //first time calling the loop with game as this
+    loop.call(this)
 }
 
 Game.prototype.stop = function () {
