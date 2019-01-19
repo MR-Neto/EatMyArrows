@@ -3,6 +3,8 @@
 function Arrow(canvas, x, y, direction, speed) {
     this.x = x;
     this.y = y;
+    this.width;
+    this.height;
     this.direction = direction;
     this.speed = speed;
     this.canvas = canvas;
@@ -33,12 +35,16 @@ Arrow.prototype.update = function () {
     }
 }
 
-Arrow.prototype.checkColide = function () {
-    //Returns Boolean
+Arrow.prototype.shootedTarget = function (enemy) {
+    var yCheck = enemy.y < this.y < enemy.y && enemy.y + enemy.height > this.y;
+    var xCheck = enemy.x < this.x && enemy.x + enemy.width > this.x;
+    return yCheck && xCheck;
 }
 
 Arrow.prototype.draw = function () {
     this.ctx.drawImage(this.img, this.x, this.y);
+    this.width = this.img.width;
+    this.height = this.img.height;
 }
 
 Arrow.prototype.isInScreen = function () {
