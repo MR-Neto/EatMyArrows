@@ -1,6 +1,6 @@
 'use strict';
 
-function Game(canvas) {
+function Game(canvas, gameEndedHandler) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.archer = new Archer(canvas);
@@ -8,10 +8,12 @@ function Game(canvas) {
     this.arrows = [];
     this.castle = new Castle(canvas, 5);
     this.animation;
+    this.gameEndedHandler = gameEndedHandler;
+    this.enemiesKilled = 0;
 
     this._updateGame = function () {
 
-        if (Math.random() < 0.01) {
+        if (Math.random() < 0.001) {
             this.enemies.push(new Enemy(this.canvas, (Math.random() * 0.3 + 0.5) * this.canvas.height, 1))
         };
 
@@ -27,14 +29,15 @@ function Game(canvas) {
             return arrow.isInScreen();
         });
 
-        var arrowsToClean =[];
+        var arrowsToClean = [];
 
         this.arrows.forEach((function (arrow) {
             arrow.update();
 
             this.enemies = this.enemies.filter((function (enemy) {
                 if (arrow.shootedTarget(enemy)) {
-                 arrowsToClean.push(arrow);   
+                    this.enemiesKilled ++;
+                    arrowsToClean.push(arrow);
                 }
                 return !arrow.shootedTarget(enemy);
             }).bind(this));
@@ -51,9 +54,7 @@ function Game(canvas) {
             }
         }).bind(this));
 
-        if (this.castle.isCastleLost()) {
-            game.stop();
-        }
+
     }
 
     this._drawCanvas = function () {
@@ -69,6 +70,9 @@ function Game(canvas) {
         this.arrows.forEach(function (arrow) {
             arrow.draw();
         });
+
+        this.ctx.font = "10px MedievalSharp";
+        this.ctx.fillText(`Enemies Killed ${this.enemiesKilled}/20`, 0.5*this.canvas.width, 25, 200);
     }
 
     this._clearCanvas = function () {
@@ -87,6 +91,11 @@ Game.prototype.start = function () {
         this._drawCanvas();
 
         this.animation = window.requestAnimationFrame(loop.bind(this));
+
+
+        if (this.castle.isCastleLost() || this.enemiesKilled>=20) {
+            this.gameEndedHandler();
+        }
     }
 
     //first time calling the loop with game as this
@@ -95,6 +104,12 @@ Game.prototype.start = function () {
 
 Game.prototype.stop = function () {
     window.cancelAnimationFrame(this.animation);
+
+    if (game.castle.isCastleLost()) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 Game.prototype.keyUp = function () {
@@ -112,3 +127,5 @@ Game.prototype.keyUp = function () {
 Game.prototype.keyEnter = function () {
     this.arrows.push(this.archer.shootArrow());
 }
+
+

@@ -36,7 +36,7 @@ Arrow.prototype.update = function () {
 }
 
 Arrow.prototype.shootedTarget = function (enemy) {
-    var yCheck = enemy.y < this.y < enemy.y && enemy.y + enemy.height > this.y;
+    var yCheck = enemy.y < this.y && enemy.y + enemy.height > this.y;
     var xCheck = enemy.x < this.x && enemy.x + enemy.width > this.x;
     return yCheck && xCheck;
 }

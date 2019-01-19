@@ -34,7 +34,18 @@ function showEndScreen() {
     var target = document.querySelector(".container");
     destroyDom(target);
     var endScreen = buildDom(`
-        <h1>Victory</h1>
+        <h1>Game Over</h1>
+        <a href="#" class="button">Restart Battle</a>
+    `);
+
+    endScreen.querySelector(".button").addEventListener("click", startGame);
+}
+
+function showEndScreen(message) {
+    var target = document.querySelector(".container");
+    destroyDom(target);
+    var endScreen = buildDom(`
+        <h1>${message}</h1>
         <a href="#" class="button">Restart Battle</a>
     `);
 
@@ -48,9 +59,21 @@ var game;
 function startGame() {
     buildGameScreen();
 
-    var canvas = document.getElementById('canvas');
+    var canvas = document.getElementById('canvas'); 
+
+    var gameEnded = function () {
+
+        if (game.stop()) {
+            //Castle is lost
+            showEndScreen('Game Over');
+        } else{
+            //Castle is safe
+            showEndScreen('Victory');
+        }
+    }
     
-    game = new Game(canvas);
+    game = new Game(canvas,gameEnded);
+
     var onKeyDown = function (event) {
         switch (event.keyCode) {
             case 38: //arrow up
