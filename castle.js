@@ -25,9 +25,7 @@ Castle.prototype.setCastleStatus = function () {
     if (this.lives <= 3) {
         this.imgCastleSrc = './images/castle2.png';
     }
-    if (this.lives <= 2) {
-        this.imgCastleSrc = './images/castle3.png';
-    }
+    
 }
 
 Castle.prototype.draw = function () {
@@ -38,6 +36,7 @@ Castle.prototype.draw = function () {
     for (let index = 1; index <= this.lives; index++) {
         this.ctx.drawImage(this.lifeImage, 20*index, 15,15,15);
     }
+
     
-    this.ctx.drawImage(imgCastle, 0, 0, 684, 1128, this.x, this.y, this.width, this.height);
+    this.ctx.drawImage(imgCastle, 0, 0, 684, 1128, this.x, this.y, this.width, this.height); 
 }

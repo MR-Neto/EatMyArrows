@@ -13,7 +13,7 @@ function Game(canvas, gameEndedHandler) {
 
     this._updateGame = function () {
 
-        if (Math.random() < 0.001) {
+        if (Math.random() < 0.005) {
             this.enemies.push(new Enemy(this.canvas, (Math.random() * 0.3 + 0.5) * this.canvas.height, 1))
         };
 
@@ -105,7 +105,7 @@ Game.prototype.start = function () {
 Game.prototype.stop = function () {
     window.cancelAnimationFrame(this.animation);
 
-    if (game.castle.isCastleLost()) {
+    if (this.castle.isCastleLost()) {
         return true;
     } else {
         return false;
