@@ -8,9 +8,10 @@ function Archer(canvas) {
     this.width = 34;
     this.height = 34;
     this.direction = 1;
-    this.imgSrc = './images/archer.png';
     this.img = new Image();
-    this.img.src = this.imgSrc;
+    this.isShooting =false;
+    this.tickCount =0;
+    this.imgOrder =1;
 
     this.imgSrcPointer = './images/arrowHorizontal.png';
     this.imgPointer = new Image();
@@ -18,24 +19,44 @@ function Archer(canvas) {
 }
 
 Archer.prototype.shootArrow = function () {
+    this.isShooting=true;
     var speed = 2;
     var arrow = new Arrow(this.canvas,this.x, this.y+this.height/2, this.direction, speed);
     return arrow;
 }
 
 Archer.prototype.aimUp = function () {
-    this.direction -= 0.1;
+    this.direction -= 0.5;
 }
 
 Archer.prototype.aimDown = function () {
-    this.direction += 0.1;
+    this.direction += 0.5;
 }
 
 Archer.prototype.draw = function () {
+
+    if (this.isShooting) {
+
+        if (this.tickCount<7) {
+            this.tickCount++;
+        } else{            
+            this.tickCount=0;
+            this.imgOrder = this.imgOrder + 1;
+            if(this.imgOrder===4){
+                this.isShooting=false;
+            }
+            this.img.src = `./images/archer${this.imgOrder}.png`;
+            
+        }
+    } else {
+        this.tickCount=0;
+        this.imgOrder=0;
+        this.img.src = `./images/archer1.png`;
+    }
+
     this.ctx.drawImage(this.img, this.x, this.y);
-
+   
     this.ctx.save();
-
     // translate context to center of canvas
     this.ctx.translate(200, 75);
 
