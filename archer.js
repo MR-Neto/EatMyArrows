@@ -3,17 +3,17 @@
 function Archer(canvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
-    this.x = 0.82 * this.canvas.width;
-    this.y = 0.525 * this.canvas.height;
-    this.width = 0.07 * this.canvas.width;
-    this.height = 0.07 * this.canvas.width;
+    this.x = 0.825 * this.canvas.width;
+    this.y = 0.53 * this.canvas.height;
+    this.width = 0.05 * this.canvas.width;
+    this.height = 0.05 * this.canvas.width;
     this.direction = 1;
     this.img = new Image();
     this.isShooting =false;
     this.tickCount =0;
     this.imgOrder =1;
 
-    this.imgSrcPointer = './images/arrowHorizontal.png';
+    this.imgSrcPointer = './images/arrowDirection.png';
     this.imgPointer = new Image();
     this.imgPointer.src = this.imgSrcPointer;
 
@@ -37,10 +37,10 @@ Archer.prototype.aimDown = function () {
 
 Archer.prototype.draw = function (canvas) {
 
-    this.x = 0.82 * this.canvas.width;
-    this.y = 0.525 * this.canvas.height;
-    this.width = 0.07 * this.canvas.width;
-    this.height = 0.07 * this.canvas.width;
+    this.x = 0.825 * this.canvas.width;
+    this.y = 0.53 * this.canvas.height;
+    this.width = 0.05 * this.canvas.width;
+    this.height = 0.05 * this.canvas.width;
 
     if (this.isShooting) {
 
@@ -66,14 +66,14 @@ Archer.prototype.draw = function (canvas) {
    
     this.ctx.save();
     // translate context to center of canvas
-    this.ctx.translate(200, 75);
+    this.ctx.translate(this.x, this.y+this.height/2);
 
     // rotate canvas 20 degrees per direction point
-    this.ctx.rotate(Math.PI /180*20*(this.direction*(-1)));
+    this.ctx.rotate(Math.PI /180*25*(this.direction*(-1)));
 
     // draw the image
     // since the this.ctx is rotated, the image will be rotated also
-    this.ctx.drawImage(this.imgPointer, -16, 0);
+    this.ctx.drawImage(this.imgPointer, -40, -10,40,20);
 
     // we’re done with the rotating so restore the unrotated this.ctx
     this.ctx.restore(); 

@@ -20,16 +20,16 @@ Enemy.prototype.update = function () {
 }
 
 
-Enemy.prototype.isInGame = function () {
-    return this.x >= 0 && this.y >= 0 && this.x <= 0.70 * this.canvas.width && this.y <= this.canvas.height;
+Enemy.prototype.isInGame = function (canvas) {
+    return this.x >= 0 && this.y >= 0 && this.x <= 0.80 * canvas.width && this.y <= canvas.height;
 }
 
-Enemy.prototype.isCastleInvaded = function () {
-    return this.x === 0.70 * this.canvas.width && this.y >= 0 && this.y <= this.canvas.height;
+Enemy.prototype.isCastleInvaded = function (canvas) {
+    return this.x > 0.80 * canvas.width && this.y >= 0 && this.y <= canvas.height;
 }
 
 Enemy.prototype.draw = function () {
-    if (this.tickCount < 15) {
+    if (this.tickCount < 7) {
         this.tickCount++;
     } else {
         this.tickCount = 0;

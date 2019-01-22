@@ -16,23 +16,29 @@ function Arrow(canvas, x, y, direction, speed) {
 
 
 Arrow.prototype.update = function () {
-    this.x -= this.speed;
-    this.y = this.y + this.direction;
 
     if (this.direction >= 1.5) {
+        this.speed=1;
         this.imgSrc = './images/arrowDown.png';
         this.img = new Image();
         this.img.src = this.imgSrc;
 
     } else if (this.direction <= -1.5) {
+        this.speed=1;
         this.imgSrc = './images/arrowUp.png';
         this.img = new Image();
         this.img.src = this.imgSrc;
     } else {
+        this.speed=2;
         this.imgSrc = './images/arrowHorizontal.png';
         this.img = new Image();
         this.img.src = this.imgSrc;
     }
+    
+    this.x -= this.speed;
+    this.y = this.y + this.direction;
+
+    
 }
 
 Arrow.prototype.shootedTarget = function (enemy) {
@@ -42,7 +48,7 @@ Arrow.prototype.shootedTarget = function (enemy) {
 }
 
 Arrow.prototype.draw = function () {
-    this.ctx.drawImage(this.img, this.x, this.y);
+    this.ctx.drawImage(this.img, this.x, this.y,30,20);
     this.width = this.img.width;
     this.height = this.img.height;
 }

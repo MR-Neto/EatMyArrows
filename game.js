@@ -4,7 +4,7 @@ function Game(canvas, gameEndedHandler) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.archer = new Archer(canvas);
-    this.enemies = [new Enemy(canvas, canvas.height * 0.95, 3)];
+    this.enemies = [new Enemy(canvas, canvas.height * 0.8, 3)];
     this.deadEnemies = [];
     this.arrows = [];
     this.castle = new Castle(canvas, 5);
@@ -14,13 +14,13 @@ function Game(canvas, gameEndedHandler) {
 
     this._updateGame = function () {
 
-        if (Math.random() < 0.05) {
-            this.enemies.push(new Enemy(this.canvas, (Math.random() * 0.375 + 0.575) * this.canvas.height, 3))
+        if (Math.random() < 0.005) {
+            this.enemies.push(new Enemy(this.canvas, (Math.random() * 0.35 + 0.575) * this.canvas.height, 3))
         };
 
         this.enemies = this.enemies.filter(function (enemy) {
-            return enemy.isInGame();
-        });
+            return enemy.isInGame(this.canvas);
+        }.bind(this));
 
         this.enemies.forEach(function (enemy) {
             enemy.update();
@@ -53,7 +53,7 @@ function Game(canvas, gameEndedHandler) {
         });
 
         this.enemies.forEach((function (enemy) {
-            if (enemy.isCastleInvaded()) {
+            if (enemy.isCastleInvaded(this.canvas)) {
                 this.castle.loseLife();
             }
         }).bind(this));
