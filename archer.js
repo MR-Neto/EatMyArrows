@@ -16,6 +16,8 @@ function Archer(canvas) {
     this.imgSrcPointer = './images/arrowHorizontal.png';
     this.imgPointer = new Image();
     this.imgPointer.src = this.imgSrcPointer;
+
+
 }
 
 Archer.prototype.shootArrow = function () {
@@ -42,11 +44,11 @@ Archer.prototype.draw = function () {
         } else{            
             this.tickCount=0;
             this.imgOrder = this.imgOrder + 1;
-            if(this.imgOrder===4){
-                this.isShooting=false;
-            }
             this.img.src = `./images/archer${this.imgOrder}.png`;
-            
+            if(this.imgOrder===5){
+                this.isShooting=false;
+                this.img.src = `./images/archer1.png`;
+            }
         }
     } else {
         this.tickCount=0;

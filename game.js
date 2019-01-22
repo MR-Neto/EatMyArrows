@@ -5,6 +5,7 @@ function Game(canvas, gameEndedHandler) {
     this.ctx = canvas.getContext('2d');
     this.archer = new Archer(canvas);
     this.enemies = [new Enemy(canvas, canvas.height * 0.80, 1)];
+    this.deadEnemies = [];
     this.arrows = [];
     this.castle = new Castle(canvas, 5);
     this.animation;
@@ -36,6 +37,9 @@ function Game(canvas, gameEndedHandler) {
 
             this.enemies = this.enemies.filter((function (enemy) {
                 if (arrow.shootedTarget(enemy)) {
+                    enemy.isDead=true;
+                    this.deadEnemies.push(enemy);
+                    setTimeout((function(){this.deadEnemies.shift()}).bind(this), 2000);
                     this.enemiesKilled ++;
                     arrowsToClean.push(arrow);
                 }
@@ -62,6 +66,10 @@ function Game(canvas, gameEndedHandler) {
         this.castle.draw();
 
         this.archer.draw();
+
+        this.deadEnemies.forEach(function (enemy) {
+            enemy.draw();
+        });
 
         this.enemies.forEach(function (enemy) {
             enemy.draw();
