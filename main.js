@@ -1,7 +1,9 @@
 'use strict';
 
+var game;
+
 function buildDom(html) {
-    var target = document.querySelector(".container");
+    var target = document.querySelector(".max-container");
     target.innerHTML = html;
 
     return target;
@@ -12,41 +14,52 @@ function destroyDom(target) {
 }
 
 function showSplashScreen() {
-    var target = document.querySelector(".container");
+    var target = document.querySelector(".max-container");
     destroyDom(target);
     var splashScreen = buildDom(`
+
+    <div class="container">
         <h1>Kill Them All</h1>
         <a href="#" class="button">Fight!</a>
+    </div>
+       
     `);
 
     splashScreen.querySelector(".button").addEventListener("click", startGame);
 }
 
 function buildGameScreen() {
-    var target = document.querySelector(".container");
+    var target = document.querySelector(".max-container");
     destroyDom(target);
+
     var gameScreen = buildDom(`
-        <canvas id="canvas"></canvas>
+         <canvas id="canvas"></canvas>
     `);
+
+
 }
 
 function showEndScreen() {
-    var target = document.querySelector(".container");
+    var target = document.querySelector(".max-container");
     destroyDom(target);
     var endScreen = buildDom(`
+    <div class="container">
         <h1>Game Over</h1>
         <a href="#" class="button">Restart Battle</a>
+    </div>   
     `);
 
     endScreen.querySelector(".button").addEventListener("click", startGame);
 }
 
 function showEndScreen(message) {
-    var target = document.querySelector(".container");
+    var target = document.querySelector(".max-container");
     destroyDom(target);
     var endScreen = buildDom(`
+    <div class="container">
         <h1>${message}</h1>
         <a href="#" class="button">Restart Battle</a>
+    </div>   
     `);
 
     endScreen.querySelector(".button").addEventListener("click", startGame);
@@ -54,25 +67,27 @@ function showEndScreen(message) {
 
 window.addEventListener('load', showSplashScreen);
 
-var game;
-
 function startGame() {
     buildGameScreen();
 
-    var canvas = document.getElementById('canvas'); 
 
+    var canvas = document.getElementById('canvas');
+ 
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
     var gameEnded = function () {
 
         if (game.stop()) {
             //Castle is lost
             showEndScreen('Game Over');
-        } else{
+        } else {
             //Castle is safe
             showEndScreen('Victory');
         }
     }
-    
-    game = new Game(canvas,gameEnded);
+
+    game = new Game(canvas, gameEnded);
 
     var onKeyDown = function (event) {
         switch (event.keyCode) {
@@ -96,3 +111,6 @@ function startGame() {
 
     game.start();
 }
+
+
+

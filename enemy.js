@@ -3,15 +3,15 @@
 function Enemy(canvas, y, speed) {
     this.x = 1;
     this.y = y;
-    this.width;
-    this.height;
+    this.height = y * 0.09;
+    this.width = this.height;
     this.speed = speed;
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.img = new Image();
     this.imgOrder = 1;
     this.tickCount = 0;
-    this.isDead =false;
+    this.isDead = false;
 }
 
 
@@ -38,16 +38,15 @@ Enemy.prototype.draw = function () {
         } else {
             this.imgOrder = this.imgOrder + 1;
         }
-    }    
+    }
 
     this.img.src = `./images/enemy${this.imgOrder}.png`;
 
     if (this.isDead) {
         this.img.src = `./images/enemyDead.png`;
     }
-    this.ctx.drawImage(this.img, this.x, this.y);
-    this.width = this.img.width;
-    this.height = this.img.height;
+    this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+
 }
 
 Enemy.prototype.die = function () {

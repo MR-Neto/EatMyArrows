@@ -4,7 +4,7 @@ function Game(canvas, gameEndedHandler) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.archer = new Archer(canvas);
-    this.enemies = [new Enemy(canvas, canvas.height * 0.80, 1)];
+    this.enemies = [new Enemy(canvas, canvas.height * 0.95, 3)];
     this.deadEnemies = [];
     this.arrows = [];
     this.castle = new Castle(canvas, 5);
@@ -14,8 +14,8 @@ function Game(canvas, gameEndedHandler) {
 
     this._updateGame = function () {
 
-        if (Math.random() < 0.01) {
-            this.enemies.push(new Enemy(this.canvas, (Math.random() * 0.3 + 0.5) * this.canvas.height, 1))
+        if (Math.random() < 0.05) {
+            this.enemies.push(new Enemy(this.canvas, (Math.random() * 0.375 + 0.575) * this.canvas.height, 3))
         };
 
         this.enemies = this.enemies.filter(function (enemy) {
@@ -63,9 +63,12 @@ function Game(canvas, gameEndedHandler) {
 
     this._drawCanvas = function () {
 
-        this.castle.draw();
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+    
+        this.castle.draw(this.canvas);
 
-        this.archer.draw();
+        this.archer.draw(this.canvas);
 
         this.deadEnemies.forEach(function (enemy) {
             enemy.draw();
@@ -79,8 +82,8 @@ function Game(canvas, gameEndedHandler) {
             arrow.draw();
         });
 
-        this.ctx.font = "10px MedievalSharp";
-        this.ctx.fillText(`Enemies Killed ${this.enemiesKilled}/20`, 0.5*this.canvas.width, 25, 200);
+        this.ctx.font = "40px MedievalSharp";
+        this.ctx.fillText(`Enemies Killed ${this.enemiesKilled}/20`, 0.7*this.canvas.width, 75, 0.25*this.canvas.width);
     }
 
     this._clearCanvas = function () {
@@ -135,5 +138,7 @@ Game.prototype.keyUp = function () {
 Game.prototype.keyEnter = function () {
     this.arrows.push(this.archer.shootArrow());
 }
+
+
 
 

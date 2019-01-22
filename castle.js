@@ -1,10 +1,10 @@
 'use strict';
 
 function Castle(canvas, lives) {
-    this.x = 0.65 * canvas.width;
-    this.y = 0.05 * canvas.height;
-    this.width = 0.35 * canvas.width;
-    this.height = 0.95 * canvas.height;
+    this.x = 0.80 * canvas.width;
+    this.y = 0.15 * canvas.height;
+    this.width = 0.20 * canvas.width;
+    this.height = 0.85 * canvas.height;
     this.lives = lives || 5;
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
@@ -28,15 +28,22 @@ Castle.prototype.setCastleStatus = function () {
     
 }
 
-Castle.prototype.draw = function () {
+Castle.prototype.draw = function (canvas) {
+
+    this.x = 0.80 * canvas.width;
+    this.y = 0.15 * canvas.height;
+    this.width = 0.20 * canvas.width;
+    this.height = 0.85 * canvas.height;
+
     var imgCastle = new Image();
     this.setCastleStatus();
     imgCastle.src = this.imgCastleSrc;
 
     for (let index = 1; index <= this.lives; index++) {
-        this.ctx.drawImage(this.lifeImage, 20*index, 15,15,15);
+        this.ctx.drawImage(this.lifeImage, 50*index, 30,40,40);
     }
 
     
     this.ctx.drawImage(imgCastle, 0, 0, 684, 1128, this.x, this.y, this.width, this.height); 
+
 }
