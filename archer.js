@@ -17,14 +17,19 @@ function Archer(canvas) {
     this.imgPointer = new Image();
     this.imgPointer.src = this.imgSrcPointer;
 
+    this.readyToShoot =true;
+
 
 }
 
 Archer.prototype.shootArrow = function () {
-    console.log("direction"+this.direction);
-    this.isShooting=true;
-    var arrow = new Arrow(this.canvas,this.x, this.y+this.height/2, this.direction);
-    return arrow;
+    if(this.readyToShoot){
+        this.readyToShoot=false;
+        setTimeout((function () { this.readyToShoot=true}).bind(this), 1000);
+        this.isShooting=true;
+        var arrow = new Arrow(this.canvas,this.x, this.y+this.height/2, this.direction);
+        return arrow;
+    }
 }
 
 Archer.prototype.aimUp = function () {

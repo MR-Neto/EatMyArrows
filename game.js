@@ -138,7 +138,9 @@ Game.prototype.keyUp = function () {
 }
 
 Game.prototype.keyEnter = function () {
-    this.arrows.push(this.archer.shootArrow());
+    if (this.archer.readyToShoot) {
+        this.arrows.push(this.archer.shootArrow());
+    }
 }
 
 
