@@ -14,7 +14,7 @@ function Game(canvas, gameEndedHandler) {
 
     this._updateGame = function () {
 
-        if (Math.random() < 0.005) {
+        if (Math.random() < 0.0002) {
             this.enemies.push(new Enemy(this.canvas, (Math.random() * 0.35 + 0.575) * this.canvas.height, 3))
         };
 
@@ -23,8 +23,8 @@ function Game(canvas, gameEndedHandler) {
         }.bind(this));
 
         this.enemies.forEach(function (enemy) {
-            enemy.update();
-        });
+            enemy.update(this.canvas);
+        }.bind(this));
 
         this.arrows = this.arrows.filter(function (arrow) {
             return arrow.isInScreen();
@@ -37,10 +37,14 @@ function Game(canvas, gameEndedHandler) {
 
             this.enemies = this.enemies.filter((function (enemy) {
                 if (arrow.shootedTarget(enemy)) {
-                    enemy.isDead=true;
+                    if (enemy.attackingInterval) {
+                        clearInterval(enemy.attackingInterval);
+                    }
+
+                    enemy.isDead = true;
                     this.deadEnemies.push(enemy);
-                    setTimeout((function(){this.deadEnemies.shift()}).bind(this), 2000);
-                    this.enemiesKilled ++;
+                    setTimeout((function () { this.deadEnemies.shift() }).bind(this), 2000);
+                    this.enemiesKilled++;
                     arrowsToClean.push(arrow);
                 }
                 return !arrow.shootedTarget(enemy);
@@ -53,19 +57,17 @@ function Game(canvas, gameEndedHandler) {
         });
 
         this.enemies.forEach((function (enemy) {
-            if (enemy.isCastleInvaded(this.canvas)) {
-                this.castle.loseLife();
+            if (enemy.isAttacking && !enemy.attackingInterval) {
+                enemy.attackingInterval=setInterval((function () { this.castle.loseLife() }).bind(this), 2000);    
             }
         }).bind(this));
-
-
     }
 
     this._drawCanvas = function () {
 
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-    
+
         this.castle.draw(this.canvas);
 
         this.archer.draw(this.canvas);
@@ -83,7 +85,7 @@ function Game(canvas, gameEndedHandler) {
         });
 
         this.ctx.font = "40px MedievalSharp";
-        this.ctx.fillText(`Enemies Killed ${this.enemiesKilled}/20`, 0.7*this.canvas.width, 75, 0.25*this.canvas.width);
+        this.ctx.fillText(`Enemies Killed ${this.enemiesKilled}/20`, 0.7 * this.canvas.width, 75, 0.25 * this.canvas.width);
     }
 
     this._clearCanvas = function () {
@@ -104,7 +106,7 @@ Game.prototype.start = function () {
         this.animation = window.requestAnimationFrame(loop.bind(this));
 
 
-        if (this.castle.isCastleLost() || this.enemiesKilled>=20) {
+        if (this.castle.isCastleLost() || this.enemiesKilled >= 20) {
             this.gameEndedHandler();
         }
     }

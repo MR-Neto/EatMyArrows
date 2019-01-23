@@ -16,15 +16,14 @@ function Arrow(canvas, x, y, direction, speed) {
 
 
 Arrow.prototype.update = function () {
-
     if (this.direction >= 1.5) {
-        this.speed=1;
+        this.speed=0; 
         this.imgSrc = './images/arrowDown.png';
         this.img = new Image();
         this.img.src = this.imgSrc;
 
     } else if (this.direction <= -1.5) {
-        this.speed=1;
+        this.speed=0;
         this.imgSrc = './images/arrowUp.png';
         this.img = new Image();
         this.img.src = this.imgSrc;
@@ -37,8 +36,6 @@ Arrow.prototype.update = function () {
     
     this.x -= this.speed;
     this.y = this.y + this.direction;
-
-    
 }
 
 Arrow.prototype.shootedTarget = function (enemy) {

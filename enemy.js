@@ -12,20 +12,22 @@ function Enemy(canvas, y, speed) {
     this.imgOrder = 1;
     this.tickCount = 0;
     this.isDead = false;
+    this.isAttacking = false;
+    this.attackingInterval;
 }
 
 
-Enemy.prototype.update = function () {
-    this.x += this.speed;
+Enemy.prototype.update = function (canvas) {
+    if (this.x<canvas.width*0.79) {
+        this.x += this.speed;
+    }
+    if (this.x>=canvas.width*0.79) {
+        this.isAttacking = true;
+    }
 }
-
 
 Enemy.prototype.isInGame = function (canvas) {
     return this.x >= 0 && this.y >= 0 && this.x <= 0.80 * canvas.width && this.y <= canvas.height;
-}
-
-Enemy.prototype.isCastleInvaded = function (canvas) {
-    return this.x > 0.80 * canvas.width && this.y >= 0 && this.y <= canvas.height;
 }
 
 Enemy.prototype.draw = function () {

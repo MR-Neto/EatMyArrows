@@ -13,7 +13,7 @@ function Archer(canvas) {
     this.tickCount =0;
     this.imgOrder =1;
 
-    this.imgSrcPointer = './images/arrowDirection.png';
+    this.imgSrcPointer = './images/arrowHorizontal.png';
     this.imgPointer = new Image();
     this.imgPointer.src = this.imgSrcPointer;
 
@@ -73,7 +73,7 @@ Archer.prototype.draw = function (canvas) {
 
     // draw the image
     // since the this.ctx is rotated, the image will be rotated also
-    this.ctx.drawImage(this.imgPointer, -40, -10,40,20);
+    this.ctx.drawImage(this.imgPointer, -40, 0,40,20);
 
     // we’re done with the rotating so restore the unrotated this.ctx
     this.ctx.restore(); 
