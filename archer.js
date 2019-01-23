@@ -18,6 +18,7 @@ function Archer(canvas) {
     this.imgPointer.src = this.imgSrcPointer;
 
     this.readyToShoot =true;
+    this.shootingPace =2000;
 
 
 }
@@ -25,7 +26,7 @@ function Archer(canvas) {
 Archer.prototype.shootArrow = function () {
     if(this.readyToShoot){
         this.readyToShoot=false;
-        setTimeout((function () { this.readyToShoot=true}).bind(this), 500);
+        setTimeout((function () { this.readyToShoot=true}).bind(this), this.shootingPace);
         this.isShooting=true;
         var arrow = new Arrow(this.canvas,this.x, this.y+this.height/2, this.direction);
         return arrow;

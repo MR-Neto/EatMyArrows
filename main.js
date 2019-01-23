@@ -14,6 +14,7 @@ function destroyDom(target) {
 }
 
 function showSplashScreen() {
+
     var target = document.querySelector(".max-container");
     destroyDom(target);
     var splashScreen = buildDom(`
@@ -65,7 +66,6 @@ function showEndScreen(message) {
     endScreen.querySelector(".button").addEventListener("click", startGame);
 }
 
-window.addEventListener('load', showSplashScreen);
 
 function startGame() {
     buildGameScreen();
@@ -94,14 +94,24 @@ function startGame() {
             case 38: //arrow up
                 game.keyUp();
                 break;
-
             case 40: //arrow down
                 game.keyDown();
                 break;
-
             case 32: //space bar pressed
                 game.keyEnter()
                 break;
+            case 49: //1 pressed
+                game.addNewArcher()
+            break;
+            case 50: //2 pressed
+                game.improveShootPace()
+            break;
+            case 51: //3 pressed
+                game.buyLife()
+            break;
+            case 71: //G pressed
+                game.buyGangMode()
+            break;
             default:
                 break;
         }
@@ -111,6 +121,9 @@ function startGame() {
 
     game.start();
 }
+
+
+window.addEventListener('load', showSplashScreen);
 
 
 

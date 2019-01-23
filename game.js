@@ -14,29 +14,31 @@ function Game(canvas, gameEndedHandler) {
     this.level = 1;
     this.coins = 0;
 
+    
+
     this._updateGame = function () {
 
-        if (this.enemiesKilled>=10) {
-            this.enemiesKilled=0;
+        if (this.enemiesKilled >= 10) {
+            this.enemiesKilled = 0;
             this.level++;
         }
 
-        switch (this.level){
+        switch (this.level) {
             case 1:
-             var probabilyEnemies=0.004;
-             break;
+                var probabilyEnemies = 0.004;
+                break;
 
-             case 2:
-             var probabilyEnemies=0.008;
-             break;
-             
-             case 3:
-             var probabilyEnemies=0.012;
-             break;
-             
-             default:
-             var probabilyEnemies=0.0004;
-          }
+            case 2:
+                var probabilyEnemies = 0.008;
+                break;
+
+            case 3:
+                var probabilyEnemies = 0.012;
+                break;
+
+            default:
+                var probabilyEnemies = 0.0004;
+        }
 
         if (Math.random() < probabilyEnemies) {
             this.enemies.push(new Enemy(this.canvas, (Math.random() * 0.35 + 0.575) * this.canvas.height, 1))
@@ -65,9 +67,9 @@ function Game(canvas, gameEndedHandler) {
                         clearInterval(enemy.attackingInterval);
                     }
 
-                    console.log(Math.round(Math.hypot((this.castle.x-enemy.x), (enemy.y-this.castle.y))/10)*10);
-                    this.coins = this.coins + Math.round(Math.hypot((this.castle.x-enemy.x), (enemy.y-this.castle.y))/10)*10;
-            
+                    console.log(Math.round(Math.hypot((this.castle.x - enemy.x), (enemy.y - this.castle.y)) / 10) * 10);
+                    this.coins = this.coins + Math.round(Math.hypot((this.castle.x - enemy.x), (enemy.y - this.castle.y)) / 10) * 10;
+
                     enemy.isDead = true;
                     this.deadEnemies.push(enemy);
                     setTimeout((function () { this.deadEnemies.shift() }).bind(this), 2000);
@@ -86,7 +88,7 @@ function Game(canvas, gameEndedHandler) {
         this.enemies.forEach((function (enemy) {
             if (enemy.isAttacking && !enemy.attackingInterval) {
                 this.castle.loseLife();
-                enemy.attackingInterval=setInterval((function () { this.castle.loseLife() }).bind(this), 2000);    
+                enemy.attackingInterval = setInterval((function () { this.castle.loseLife() }).bind(this), 2000);
             }
         }).bind(this));
     }
@@ -115,7 +117,12 @@ function Game(canvas, gameEndedHandler) {
         this.ctx.font = "40px MedievalSharp";
         this.ctx.fillText(`Enemy Wave ${this.level}/3`, 0.35 * this.canvas.width, 75, 0.25 * this.canvas.width);
         this.ctx.fillText(`Enemies Killed ${this.enemiesKilled}/10`, 0.7 * this.canvas.width, 75, 0.25 * this.canvas.width);
-        this.ctx.fillText(`Coins ${this.coins}`, 0.35 * this.canvas.width, 150, 0.25 * this.canvas.width);
+        this.ctx.fillText(`Coins ${this.coins}`, 0.05 * this.canvas.width, 150, 0.25 * this.canvas.width);
+        this.ctx.fillText(`Archers level ${this.coins}/4`, 0.20 * this.canvas.width, 150, 0.25 * this.canvas.width);
+        this.ctx.fillText(`Arrows level ${this.coins}/4`, 0.50 * this.canvas.width, 150, 0.25 * this.canvas.width);
+        this.ctx.fillText(`Ballistas ${this.coins}/1`, 0.75 * this.canvas.width, 150, 0.25 * this.canvas.width);
+
+
     }
 
     this._clearCanvas = function () {
@@ -173,6 +180,32 @@ Game.prototype.keyEnter = function () {
     }
 }
 
+Game.prototype.addNewArcher = function () {
 
+}
+
+Game.prototype.improveShootPace = function () {
+    if (this.coins > 2000) {
+        this.coins = this.coins - 2000;
+        this.archer.shootingPace = this.archer.shootingPace - 500;
+    }
+}
+
+Game.prototype.buyLife = function () {
+    if (this.coins > 7000) {
+        this.coins = this.coins - 7000;
+        this.castle.lives++;
+    }
+}
+
+Game.prototype.buyGangMode = function () {
+    if (this.coins > 10000) {
+        this.coins = this.coins - 10000;
+
+        var backgroundAudio = new Audio("./music/gangMusic.mp3");
+        backgroundAudio.loop=true;
+        backgroundAudio.play();
+    }
+}
 
 

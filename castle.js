@@ -22,10 +22,13 @@ Castle.prototype.loseLife = function () {
 }
 
 Castle.prototype.setCastleStatus = function () {
+    
     if (this.lives <= 3) {
         this.imgCastleSrc = './images/castle2.png';
     }
-    
+    else{
+        this.imgCastleSrc = './images/castle1.png';
+    }  
 }
 
 Castle.prototype.draw = function (canvas) {
