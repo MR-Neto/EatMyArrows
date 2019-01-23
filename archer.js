@@ -1,13 +1,13 @@
 'use strict';
 
-function Archer(canvas) {
+function Archer(canvas,x,y,width,height,direction) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
-    this.x = 0.825 * this.canvas.width;
-    this.y = 0.53 * this.canvas.height;
-    this.width = 0.05 * this.canvas.width;
-    this.height = 0.05 * this.canvas.width;
-    this.direction = 0;
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.direction = direction;
     this.img = new Image();
     this.isShooting =false;
     this.tickCount =0;
@@ -43,10 +43,10 @@ Archer.prototype.aimDown = function () {
 
 Archer.prototype.draw = function (canvas) {
 
-    this.x = 0.825 * this.canvas.width;
-    this.y = 0.53 * this.canvas.height;
-    this.width = 0.05 * this.canvas.width;
-    this.height = 0.05 * this.canvas.width;
+    // this.x = 0.825 * this.canvas.width;
+    // this.y = 0.53 * this.canvas.height;
+    // this.width = 0.05 * this.canvas.width;
+    // this.height = 0.05 * this.canvas.width;
 
     if (this.isShooting) {
 

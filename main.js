@@ -101,10 +101,10 @@ function startGame() {
                 game.keyEnter()
                 break;
             case 49: //1 pressed
-                game.addNewArcher()
+                game.improveShootPace()
             break;
             case 50: //2 pressed
-                game.improveShootPace()
+                game.addNewArcher()
             break;
             case 51: //3 pressed
                 game.buyLife()
