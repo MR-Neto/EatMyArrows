@@ -4,7 +4,7 @@ function Game(canvas, gameEndedHandler) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.archer = new Archer(canvas);
-    this.enemies = [new Enemy(canvas, canvas.height * 0.8, 3)];
+    this.enemies = [new Enemy(canvas, canvas.height * 0.8, 1)];
     this.deadEnemies = [];
     this.arrows = [];
     this.castle = new Castle(canvas, 5);
@@ -12,10 +12,11 @@ function Game(canvas, gameEndedHandler) {
     this.gameEndedHandler = gameEndedHandler;
     this.enemiesKilled = 0;
     this.level = 1;
+    this.coins = 0;
 
     this._updateGame = function () {
 
-        if (this.enemiesKilled>=5) {
+        if (this.enemiesKilled>=10) {
             this.enemiesKilled=0;
             this.level++;
         }
@@ -38,7 +39,7 @@ function Game(canvas, gameEndedHandler) {
           }
 
         if (Math.random() < probabilyEnemies) {
-            this.enemies.push(new Enemy(this.canvas, (Math.random() * 0.35 + 0.575) * this.canvas.height, 3))
+            this.enemies.push(new Enemy(this.canvas, (Math.random() * 0.35 + 0.575) * this.canvas.height, 1))
         };
 
         this.enemies = this.enemies.filter(function (enemy) {
@@ -64,6 +65,9 @@ function Game(canvas, gameEndedHandler) {
                         clearInterval(enemy.attackingInterval);
                     }
 
+                    console.log(Math.round(Math.hypot((this.castle.x-enemy.x), (enemy.y-this.castle.y))/10)*10);
+                    this.coins = this.coins + Math.round(Math.hypot((this.castle.x-enemy.x), (enemy.y-this.castle.y))/10)*10;
+            
                     enemy.isDead = true;
                     this.deadEnemies.push(enemy);
                     setTimeout((function () { this.deadEnemies.shift() }).bind(this), 2000);
@@ -111,6 +115,7 @@ function Game(canvas, gameEndedHandler) {
         this.ctx.font = "40px MedievalSharp";
         this.ctx.fillText(`Enemy Wave ${this.level}/3`, 0.35 * this.canvas.width, 75, 0.25 * this.canvas.width);
         this.ctx.fillText(`Enemies Killed ${this.enemiesKilled}/10`, 0.7 * this.canvas.width, 75, 0.25 * this.canvas.width);
+        this.ctx.fillText(`Coins ${this.coins}`, 0.35 * this.canvas.width, 150, 0.25 * this.canvas.width);
     }
 
     this._clearCanvas = function () {
