@@ -25,7 +25,7 @@ function Archer(canvas) {
 Archer.prototype.shootArrow = function () {
     if(this.readyToShoot){
         this.readyToShoot=false;
-        setTimeout((function () { this.readyToShoot=true}).bind(this), 1000);
+        setTimeout((function () { this.readyToShoot=true}).bind(this), 500);
         this.isShooting=true;
         var arrow = new Arrow(this.canvas,this.x, this.y+this.height/2, this.direction);
         return arrow;

@@ -11,10 +11,33 @@ function Game(canvas, gameEndedHandler) {
     this.animation;
     this.gameEndedHandler = gameEndedHandler;
     this.enemiesKilled = 0;
+    this.level = 1;
 
     this._updateGame = function () {
 
-        if (Math.random() < 0.000002) {
+        if (this.enemiesKilled>=5) {
+            this.enemiesKilled=0;
+            this.level++;
+        }
+
+        switch (this.level){
+            case 1:
+             var probabilyEnemies=0.004;
+             break;
+
+             case 2:
+             var probabilyEnemies=0.008;
+             break;
+             
+             case 3:
+             var probabilyEnemies=0.012;
+             break;
+             
+             default:
+             var probabilyEnemies=0.0004;
+          }
+
+        if (Math.random() < probabilyEnemies) {
             this.enemies.push(new Enemy(this.canvas, (Math.random() * 0.35 + 0.575) * this.canvas.height, 3))
         };
 
@@ -58,6 +81,7 @@ function Game(canvas, gameEndedHandler) {
 
         this.enemies.forEach((function (enemy) {
             if (enemy.isAttacking && !enemy.attackingInterval) {
+                this.castle.loseLife();
                 enemy.attackingInterval=setInterval((function () { this.castle.loseLife() }).bind(this), 2000);    
             }
         }).bind(this));
@@ -85,7 +109,8 @@ function Game(canvas, gameEndedHandler) {
         });
 
         this.ctx.font = "40px MedievalSharp";
-        this.ctx.fillText(`Enemies Killed ${this.enemiesKilled}/20`, 0.7 * this.canvas.width, 75, 0.25 * this.canvas.width);
+        this.ctx.fillText(`Enemy Wave ${this.level}/3`, 0.35 * this.canvas.width, 75, 0.25 * this.canvas.width);
+        this.ctx.fillText(`Enemies Killed ${this.enemiesKilled}/10`, 0.7 * this.canvas.width, 75, 0.25 * this.canvas.width);
     }
 
     this._clearCanvas = function () {
@@ -106,7 +131,7 @@ Game.prototype.start = function () {
         this.animation = window.requestAnimationFrame(loop.bind(this));
 
 
-        if (this.castle.isCastleLost() || this.enemiesKilled >= 20) {
+        if (this.castle.isCastleLost() || this.level > 3) {
             this.gameEndedHandler();
         }
     }
