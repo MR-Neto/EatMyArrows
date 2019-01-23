@@ -1,39 +1,38 @@
 'use strict';
 
-function Arrow(canvas, x, y, direction, speed) {
+function Arrow(canvas, x, y, direction) {
     this.x = x;
     this.y = y;
     this.width;
     this.height;
     this.direction = direction;
-    this.speed = speed;
+    this.speed = -1 * direction + 3;
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
-    this.imgSrc = './images/arrowHorizontal.png';
+    this.imgSrc = './images/arrow0.png';
     this.img = new Image();
     this.img.src = this.imgSrc;
 }
 
 
 Arrow.prototype.update = function () {
-    if (this.direction >= 1.5) {
-        this.speed=0; 
-        this.imgSrc = './images/arrowDown.png';
-        this.img = new Image();
-        this.img.src = this.imgSrc;
 
-    } else if (this.direction <= -1.5) {
-        this.speed=0;
-        this.imgSrc = './images/arrowUp.png';
-        this.img = new Image();
-        this.img.src = this.imgSrc;
+    if (this.direction < 0.5) {
+        this.imgSrc = './images/arrow0.png';
+    } else if (this.direction <= 1) {
+        this.imgSrc = './images/arrow18.png';
+    } else if (this.direction <= 1.5) {
+        this.imgSrc = './images/arrow36.png';
+    } else if (this.direction <= 2) {
+        this.imgSrc = './images/arrow54.png';
+    } else if (this.direction <= 2.5) {
+        this.imgSrc = './images/arrow72.png';
+    } else if (this.direction <= 100) {
+        this.imgSrc = './images/arrow90.png';
     } else {
-        this.speed=2;
-        this.imgSrc = './images/arrowHorizontal.png';
-        this.img = new Image();
-        this.img.src = this.imgSrc;
+        this.imgSrc = './images/arrow0.png';
     }
-    
+    this.img.src = this.imgSrc;
     this.x -= this.speed;
     this.y = this.y + this.direction;
 }
@@ -45,7 +44,7 @@ Arrow.prototype.shootedTarget = function (enemy) {
 }
 
 Arrow.prototype.draw = function () {
-    this.ctx.drawImage(this.img, this.x, this.y,30,20);
+    this.ctx.drawImage(this.img, this.x, this.y, 30, 20);
     this.width = this.img.width;
     this.height = this.img.height;
 }

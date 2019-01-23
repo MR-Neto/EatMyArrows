@@ -14,7 +14,7 @@ function Game(canvas, gameEndedHandler) {
 
     this._updateGame = function () {
 
-        if (Math.random() < 0.0002) {
+        if (Math.random() < 0.000002) {
             this.enemies.push(new Enemy(this.canvas, (Math.random() * 0.35 + 0.575) * this.canvas.height, 3))
         };
 

@@ -7,13 +7,13 @@ function Archer(canvas) {
     this.y = 0.53 * this.canvas.height;
     this.width = 0.05 * this.canvas.width;
     this.height = 0.05 * this.canvas.width;
-    this.direction = 1;
+    this.direction = 0;
     this.img = new Image();
     this.isShooting =false;
     this.tickCount =0;
     this.imgOrder =1;
 
-    this.imgSrcPointer = './images/arrowHorizontal.png';
+    this.imgSrcPointer = './images/arrow0.png';
     this.imgPointer = new Image();
     this.imgPointer.src = this.imgSrcPointer;
 
@@ -21,18 +21,18 @@ function Archer(canvas) {
 }
 
 Archer.prototype.shootArrow = function () {
+    console.log("direction"+this.direction);
     this.isShooting=true;
-    var speed = 2;
-    var arrow = new Arrow(this.canvas,this.x, this.y+this.height/2, this.direction, speed);
+    var arrow = new Arrow(this.canvas,this.x, this.y+this.height/2, this.direction);
     return arrow;
 }
 
 Archer.prototype.aimUp = function () {
-    this.direction -= 0.5;
+    this.direction -= 0.2;
 }
 
 Archer.prototype.aimDown = function () {
-    this.direction += 0.5;
+    this.direction += 0.2;
 }
 
 Archer.prototype.draw = function (canvas) {
@@ -49,7 +49,6 @@ Archer.prototype.draw = function (canvas) {
         } else{            
             this.tickCount=0;
             this.imgOrder = this.imgOrder + 1;
-            console.log(`./images/archer${this.imgOrder}.png`);
             this.img.src = `./images/archer${this.imgOrder}.png`;
             if(this.imgOrder>4){
                 this.isShooting=false;
