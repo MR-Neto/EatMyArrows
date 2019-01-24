@@ -20,9 +20,9 @@ function showSplashScreen() {
     var splashScreen = buildDom(`
 
     <div class="container">
-        <h1>Kill Them All</h1>
-        <a href="#" class="button">Fight!</a>
-        <a href="#" class="button-instructions">How to Fight!</a>
+        <h1>Eat My Arrow</h1>
+        <a href="#" class="button">Fight</a>
+        <a href="#" class="button-instructions">How to Fight</a>
     </div>
        
     `);
@@ -45,11 +45,12 @@ function showInstructionsScreen() {
         <img src="./images/enemy1.png" alt="enemy" width="70px" height="70px">
         <p>Point with up and down keys. Shoot arrow with spacebar.</p>
         <img src="./images/archer1.png" alt="archer" width="70px" height="70px">
-        <p>Use coins to improve arrows, archer and castle.</p>
+        <p>Use coins to improve your defense.</p>
         <div class="container-improvements">
             <img src="./images/bow.svg" alt="enemy" width="70px">
             <img src="./images/archer.svg" alt="enemy" width="70px">
             <img src="./images/castle.svg" alt="enemy" width="70px">
+            <img src="./images/catapult.svg" alt="enemy" width="70px">
         </div>
         <a href="#" class="button">Back</a>
     </div>
