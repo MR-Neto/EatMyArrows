@@ -13,8 +13,9 @@ function Game(canvas, gameEndedHandler) {
     this.enemiesKilled = 0;
     this.level = 1;
     this.coins = 0;
-
-
+    this.arrowsLevel =1;
+    this.backgroundAudio =new Audio("./music/gangMusic.mp3");
+    this.backgroundAudio.loop = true;
 
     this._updateGame = function () {
 
@@ -116,9 +117,7 @@ function Game(canvas, gameEndedHandler) {
         this.ctx.font = "40px MedievalSharp";
         this.ctx.fillText(`Enemy Wave ${this.level}/3`, 0.35 * this.canvas.width, 75, 0.25 * this.canvas.width);
         this.ctx.fillText(`Enemies Killed ${this.enemiesKilled}/10`, 0.7 * this.canvas.width, 75, 0.25 * this.canvas.width);
-        this.ctx.fillText(`Coins ${this.coins}`, 0.05 * this.canvas.width, 150, 0.25 * this.canvas.width);
-        this.ctx.fillText(`Archers level ${this.archers.length}/3`, 0.20 * this.canvas.width, 150, 0.25 * this.canvas.width);
-        this.ctx.fillText(`Arrows level ${this.archers[0].shootingPace}`, 0.50 * this.canvas.width, 150, 0.25 * this.canvas.width);
+        this.ctx.fillText(`Coins ${this.coins}`, 0.05 * this.canvas.width, 165, 0.25 * this.canvas.width);
         //this.ctx.fillText(`Ballistas ${this.coins}/1`, 0.75 * this.canvas.width, 150, 0.25 * this.canvas.width);
 
 
@@ -152,6 +151,7 @@ Game.prototype.start = function () {
 }
 
 Game.prototype.stop = function () {
+    this.backgroundAudio.pause();
     window.cancelAnimationFrame(this.animation);
 
     if (this.castle.isCastleLost()) {
@@ -184,46 +184,66 @@ Game.prototype.keyEnter = function () {
 }
 
 Game.prototype.improveShootPace = function () {
-
-    if (this.coins > 2500) {
+    console.log("1");
+    if (this.coins > 2500 && this.arrowsLevel<3) {  
+        this.arrowsLevel ++;
         this.coins = this.coins - 2500;
 
         this.archers.forEach(function (archer) {
-            if (archer.shootingPace > 1000) {
-                archer.shootingPace = archer.shootingPace - 500;
+            if (archer.shootingPace > 500) {
+                archer.shootingPace = archer.shootingPace - 750;
             }
         });
+
+        var div =document.querySelector(".arrows-button-div");
+        div.innerHTML =`
+            Improve Arrows: ${this.arrowsLevel}/3<br>
+            Cost: 2500 coins
+       `;
     }
 }
 
 Game.prototype.addNewArcher = function () {
+    console.log("2");
 
     if (this.coins > 5000 && this.archers.length < 3) {
         this.coins = this.coins - 5000;
         if (this.archers.length === 2) {
             this.archers.push(new Archer(this.canvas, 0.875 * this.canvas.width, 0.3 * this.canvas.height, 0.04 * this.canvas.width, 0.04 * this.canvas.width, 0));
+            this.archers.forEach(function(archer){
+                archer.direction = 0;
+            });
         }
         if (this.archers.length === 1) {
             this.archers.push(new Archer(this.canvas, 0.8 * this.canvas.width, 0.4 * this.canvas.height, 0.045 * this.canvas.width, 0.045 * this.canvas.width, 0));
+            this.archers.forEach(function(archer){
+                archer.direction = 0;
+            });
         }
+
+        var div =document.querySelector(".archer-button-div");
+        div.innerHTML =`
+               Buy Archer: ${this.archers.length}/3<br>
+               Cost: 5000 coins
+       `;
     }
 }
 
 Game.prototype.buyLife = function () {
+    console.log("3");
 
-    if (this.coins > 7500 && this.castle.life < 6) {
-        this.coins = this.coins - 7000;
+    if (this.coins > 7500 && this.castle.lives < 6) {
+        this.coins = this.coins - 7500;
         this.castle.lives++;
     }
 }
 
 Game.prototype.buyGangMode = function () {
+    this.backgroundAudio.play();
+
     if (this.coins > 10000) {
         this.coins = this.coins - 10000;
-
-        var backgroundAudio = new Audio("./music/gangMusic.mp3");
-        backgroundAudio.loop = true;
-        backgroundAudio.play();
+        this.backgroundAudio.play();
     }
 }
 
