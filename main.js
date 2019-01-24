@@ -86,6 +86,12 @@ function buildGameScreen() {
                 Cost: 7500 coins
             </div>
          </a>
+         <a href="#" class="balista-button" alt="Buy Balista">
+            <div class="balista-button-div">
+                Buy Balista<br>
+                Cost: 10000 coins
+            </div>
+         </a>
          `);
 
     return gameScreen;
@@ -171,10 +177,16 @@ function startGame() {
         game.buyLife();
     };
 
+    var buyBalista = function () {
+        game.buyBalista();
+    };
+
+
     document.addEventListener('keydown', onKeyDown);
     gameScreen.querySelector(".arrows-button").addEventListener("click", improveArrows);
     gameScreen.querySelector(".archer-button").addEventListener("click", buyArcher);
     gameScreen.querySelector(".castle-button").addEventListener("click", buyLife);
+    gameScreen.querySelector(".balista-button").addEventListener("click", buyBalista);
 
     game.start();
 }

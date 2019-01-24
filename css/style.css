@@ -43,7 +43,8 @@ body, ul {
 }
 
 .container h1{
-    font-size:4.5rem;
+    font-size:4rem;
+    margin: 0.5rem auto;
 }
 
 p{
@@ -92,20 +93,15 @@ p{
     margin:10px auto;
 }
 
-#canvas{
- 
-}
-
 .arrows-button {
     text-decoration: none;
-    text-transform: uppercase;
     font-size: 2rem;
     padding: 1rem 2rem;
     border: 1px solid black;
     border-radius: 10px;
     position: fixed;
     top: 12.5%;
-    left: 35%;
+    left: 32.5%;
     background-image: url(../images/bow.png);
     background-color:darkgray; /* Used if the image is unavailable */
     background-position: center; /* Center the image */
@@ -123,7 +119,7 @@ p{
 .arrows-button:hover .arrows-button-div{
     position: fixed;
     top:20%;
-    left: 35%;
+    left: 32.5%;
     display: block;
     padding: 0.5rem;
     font-size: 1.5rem;
@@ -136,14 +132,13 @@ p{
 
 .archer-button {
     text-decoration: none;
-    text-transform: uppercase;
     font-size: 2rem;
     padding: 1rem 2rem;
     border: 1px solid black;
     border-radius: 10px;
     position: fixed;
     top: 12.5%;
-    left: 42.5%;
+    left: 40%;
     background-image: url(../images/archer.svg);
     background-color:darkgray; /* Used if the image is unavailable */
     background-position: center; /* Center the image */
@@ -161,7 +156,7 @@ p{
 .archer-button:hover .archer-button-div{
     position: fixed;
     top:20%;
-    left: 42.5%;
+    left: 40%;
     display: block;
     padding: 0.5rem;
     font-size: 1.5rem;
@@ -173,14 +168,13 @@ p{
 
 .castle-button {
     text-decoration: none;
-    text-transform: uppercase;
     font-size: 2rem;
     padding: 1rem 2rem;
     border: 1px solid black;
     border-radius: 10px;
     position: fixed;
     top: 12.5%;
-    left: 50%;
+    left: 47.5%;
     background-image: url(../images/castle.svg);
     background-color:darkgray; /* Used if the image is unavailable */
     background-position: center; /* Center the image */
@@ -199,7 +193,45 @@ p{
 .castle-button:hover .castle-button-div{
     position: fixed;
     top:20%;
-    left: 50%;
+    left: 47.5%;
+    display: block;
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    border: 1px solid black;
+    border-radius: 10px;
+    color: black;
+    background-color:darkgray; /* Used if the image is unavailable */
+}
+
+
+.balista-button {
+    text-decoration: none;
+    font-size: 2rem;
+    padding: 1rem 2rem;
+    border: 1px solid black;
+    border-radius: 10px;
+    position: fixed;
+    top: 12.5%;
+    left: 55%;
+    background-image: url(../images/catapult.svg);
+    background-color:darkgray; /* Used if the image is unavailable */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: auto;
+    width: 60px;
+    height: 60px;
+}
+
+
+.balista-button-div{
+    display: none;
+ 
+}
+
+.balista-button:hover .balista-button-div{
+    position: fixed;
+    top:20%;
+    left: 55%;
     display: block;
     padding: 0.5rem;
     font-size: 1.5rem;

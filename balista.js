@@ -1,6 +1,6 @@
 'use strict';
 
-function Archer(canvas,x,y,width,height,direction) {
+function Balista(canvas,x,y,width,height,direction) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.x = x;
@@ -13,65 +13,60 @@ function Archer(canvas,x,y,width,height,direction) {
     this.tickCount =0;
     this.imgOrder =1;
 
-    this.imgSrcPointer = './images/arrow0.png';
+    this.imgSrcPointer = './images/balista/balistaShoot.png';
     this.imgPointer = new Image();
     this.imgPointer.src = this.imgSrcPointer;
 
     this.readyToShoot =true;
-    this.shootingPace =2000;
+    this.shootingPace =3000;
 
 
 }
 
-Archer.prototype.shootArrow = function () {
+Balista.prototype.shootArrow = function () {
     if(this.readyToShoot){
         this.readyToShoot=false;
         setTimeout((function () { this.readyToShoot=true}).bind(this), this.shootingPace);
         this.isShooting=true;
-        var arrow = new Arrow(this.canvas,this.x, this.y+this.height/2, this.direction, false);
+        var arrow = new Arrow(this.canvas,this.x, this.y, this.direction,true);
         return arrow;
     }
 }
 
-Archer.prototype.aimUp = function () {
+Balista.prototype.aimUp = function () {
     this.direction -= 0.2;
 }
 
-Archer.prototype.aimDown = function () {
+Balista.prototype.aimDown = function () {
     this.direction += 0.2;
 }
 
-Archer.prototype.draw = function (canvas) {
-
-    // this.x = 0.825 * this.canvas.width;
-    // this.y = 0.53 * this.canvas.height;
-    // this.width = 0.05 * this.canvas.width;
-    // this.height = 0.05 * this.canvas.width;
+Balista.prototype.draw = function (canvas) {
 
     if (this.isShooting) {
 
-        if (this.tickCount<7) {
+        if (this.tickCount<10) {
             this.tickCount++;
         } else{            
             this.tickCount=0;
             this.imgOrder = this.imgOrder + 1;
-            this.img.src = `./images/archer${this.imgOrder}.png`;
-            if(this.imgOrder>4){
+            this.img.src = `./images/balista/balista${this.imgOrder}.png`;
+            if(this.imgOrder>5){
                 this.isShooting=false;
-                this.img.src = `./images/archer1.png`;
+                this.img.src = './images/balista/balista1.png';
             }
         }
     } else {
         this.tickCount=0;
         this.imgOrder=0;
-        this.img.src = `./images/archer1.png`;
+        this.img.src = './images/balista/balista1.png';
     }
 
     this.ctx.drawImage(this.img, this.x, this.y,this.width,this.height);
    
     this.ctx.save();
     // translate context to center of canvas
-    this.ctx.translate(this.x, this.y+this.height/2);
+    this.ctx.translate(this.x, this.y);
 
     // rotate canvas 20 degrees per direction point
     this.ctx.rotate(Math.PI /180*25*(this.direction*(-1)));

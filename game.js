@@ -4,6 +4,7 @@ function Game(canvas, gameEndedHandler) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.archers = [new Archer(canvas, 0.825 * this.canvas.width, 0.53 * this.canvas.height, 0.05 * this.canvas.width, 0.05 * this.canvas.width, 0)];
+    this.balista;
     this.enemies = [new Enemy(canvas, canvas.height * 0.8, 1)];
     this.deadEnemies = [];
     this.arrows = [];
@@ -13,7 +14,7 @@ function Game(canvas, gameEndedHandler) {
     this.enemiesKilled = 0;
     this.level = 1;
     this.coins = 0;
-    this.arrowsLevel =1;
+    this.arrowsLevel = 1;
     this.backgroundAudio =new Audio("./music/gangMusic.mp3");
     this.backgroundAudio.loop = true;
 
@@ -34,7 +35,7 @@ function Game(canvas, gameEndedHandler) {
                 break;
 
             case 3:
-                var probabilyEnemies = 0.012;
+                var probabilyEnemies = 0.015;
                 break;
 
             default:
@@ -42,7 +43,7 @@ function Game(canvas, gameEndedHandler) {
         }
 
         if (Math.random() < probabilyEnemies) {
-            this.enemies.push(new Enemy(this.canvas, (Math.random() * 0.35 + 0.575) * this.canvas.height, 1))
+            this.enemies.push(new Enemy(this.canvas, (Math.random() * 0.3 + 0.625) * this.canvas.height, 1))
         };
 
         this.enemies = this.enemies.filter(function (enemy) {
@@ -97,6 +98,11 @@ function Game(canvas, gameEndedHandler) {
         this.canvas.height = window.innerHeight;
 
         this.castle.draw(this.canvas);
+
+
+        if(this.balista){
+            this.balista.draw();
+        }
 
         this.archers.forEach(function (archer) {
             archer.draw();
@@ -166,13 +172,22 @@ Game.prototype.keyUp = function () {
     this.archers.forEach(function (archer) {
         archer.aimUp();
     });
+
+    if (this.balista) {
+        this.balista.aimUp();
+    }
 }
 
 Game.prototype.keyDown = function () {
 
     this.archers.forEach(function (archer) {
         archer.aimDown();
+        
     });
+
+    if (this.balista) {
+        this.balista.aimDown();
+    }
 }
 
 Game.prototype.keyEnter = function () {
@@ -181,6 +196,9 @@ Game.prototype.keyEnter = function () {
             this.arrows.push(archer.shootArrow());
         }
     }.bind(this));
+    if (this.balista && this.balista.readyToShoot) {
+        this.arrows.push(this.balista.shootArrow());
+    }
 }
 
 Game.prototype.improveShootPace = function () {
@@ -238,12 +256,22 @@ Game.prototype.buyLife = function () {
     }
 }
 
-Game.prototype.buyGangMode = function () {
-    this.backgroundAudio.play();
+Game.prototype.buyBalista = function () {
 
+
+    if (this.coins > 10000 && !this.balista) {
+        console.log("1");
+        this.coins = this.coins - 10000;
+        this.balista = new Balista(this.canvas, 0.895 * this.canvas.width, 0.645 * this.canvas.height, 0.05 * this.canvas.width, 0.05 * this.canvas.width, 0);
+    }
+}
+
+
+Game.prototype.buyGangMode = function () {
     if (this.coins > 10000) {
         this.coins = this.coins - 10000;
         this.backgroundAudio.play();
+
     }
 }
 

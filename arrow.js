@@ -1,6 +1,6 @@
 'use strict';
 
-function Arrow(canvas, x, y, direction) {
+function Arrow(canvas, x, y, direction,isBalistaShoot) {
     this.x = x;
     this.y = y;
     this.width;
@@ -12,6 +12,7 @@ function Arrow(canvas, x, y, direction) {
     this.imgSrc = './images/arrow0.png';
     this.img = new Image();
     this.img.src = this.imgSrc;
+    this.isBalistaShoot = isBalistaShoot;
 }
 
 
@@ -32,6 +33,11 @@ Arrow.prototype.update = function () {
     } else {
         this.imgSrc = './images/arrow0.png';
     }
+
+    if (this.isBalistaShoot) {
+        this.imgSrc = './images/balista/balistaShoot.png';
+    }
+
     this.img.src = this.imgSrc;
     this.x -= this.speed;
     this.y = this.y + this.direction;
@@ -44,9 +50,14 @@ Arrow.prototype.shootedTarget = function (enemy) {
 }
 
 Arrow.prototype.draw = function () {
-    this.ctx.drawImage(this.img, this.x, this.y, 30, 20);
-    this.width = this.img.width;
-    this.height = this.img.height;
+
+    if(this.isBalistaShoot){
+        this.speed = 5;
+        this.ctx.drawImage(this.img, this.x, this.y, 90, 30);
+    }
+    else{
+        this.ctx.drawImage(this.img, this.x, this.y, 30, 20);
+    }
 }
 
 Arrow.prototype.isInScreen = function () {
